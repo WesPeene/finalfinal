@@ -1,0 +1,480 @@
+reticulate::repl_python()
+from flask import Flask
+app = Flask(__name__)
+@app.route('/')
+def index():
+return 'Hello, World!'
+if __name__ == '__main__':
+app.run()
+python app.py
+exit
+reticulate::repl_python()
+from shiny import App, render, ui, reactive
+import requests
+import logging
+api_url = 'http://127.0.0.1:8080/predict'
+logging.basicConfig(
+format='%(asctime)s - %(message)s',
+level=logging.INFO
+)
+app_ui = ui.page_fluid(
+ui.panel_title("Penguin Mass Predictor"),
+ui.layout_sidebar(
+ui.panel_sidebar(
+[ui.input_slider("bill_length", "Bill Length (mm)", 30, 60, 45, step = 0.1),
+ui.input_select("sex", "Sex", ["Male", "Female"]),
+ui.input_select("species", "Species", ["Adelie", "Chinstrap", "Gentoo"]),
+ui.input_action_button("predict", "Predict")]
+),
+ui.panel_main(
+ui.h2("Penguin Parameters"),
+ui.output_text_verbatim("vals_out"),
+ui.h2("Predicted Penguin Mass (g)"),
+ui.output_text("pred_out")
+)
+)
+)
+def server(input, output, session):
+logging.info("App start")
+@reactive.Calc
+def vals():
+d = {
+"bill_length_mm" : input.bill_length(),
+"sex_Male" : input.sex() == "Male",
+"species_Gentoo" : input.species() == "Gentoo",
+"species_Chinstrap" : input.species() == "Chinstrap"
+}
+return d
+@reactive.Calc
+@reactive.event(input.predict)
+def pred():
+logging.info("Request Made")
+r = requests.post(api_url, json = vals())
+logging.info("Request Returned")
+if r.status_code != 200:
+logging.error("HTTP error returned")
+return r.json().get('predict')[0]
+@output
+@render.text
+def vals_out():
+return f"{vals()}"
+@output
+@render.text
+def pred_out():
+return f"{round(pred())}"
+app = App(app_ui, server)
+from flask import Flask
+app = Flask(__name__)
+@app.route('/')
+if __name__ == '__main__':
+app.run()
+python pyapp.py
+reticulate::repl_python()
+from shiny import App, render, ui, reactive
+import requests
+import logging
+from flask import Flask
+app = Flask(__name__)
+@app.route('/')
+api_url = 'http://127.0.0.1:8080/predict'
+logging.basicConfig(
+format='%(asctime)s - %(message)s',
+level=logging.INFO
+)
+app_ui = ui.page_fluid(
+ui.panel_title("Penguin Mass Predictor"),
+ui.layout_sidebar(
+ui.panel_sidebar(
+[ui.input_slider("bill_length", "Bill Length (mm)", 30, 60, 45, step = 0.1),
+ui.input_select("sex", "Sex", ["Male", "Female"]),
+ui.input_select("species", "Species", ["Adelie", "Chinstrap", "Gentoo"]),
+ui.input_action_button("predict", "Predict")]
+),
+ui.panel_main(
+ui.h2("Penguin Parameters"),
+ui.output_text_verbatim("vals_out"),
+ui.h2("Predicted Penguin Mass (g)"),
+ui.output_text("pred_out")
+)
+)
+)
+def server(input, output, session):
+logging.info("App start")
+@reactive.Calc
+def vals():
+d = {
+"bill_length_mm" : input.bill_length(),
+"sex_Male" : input.sex() == "Male",
+"species_Gentoo" : input.species() == "Gentoo",
+"species_Chinstrap" : input.species() == "Chinstrap"
+}
+return d
+@reactive.Calc
+@reactive.event(input.predict)
+def pred():
+logging.info("Request Made")
+r = requests.post(api_url, json = vals())
+logging.info("Request Returned")
+if r.status_code != 200:
+logging.error("HTTP error returned")
+return r.json().get('predict')[0]
+@output
+@render.text
+def vals_out():
+return f"{vals()}"
+@output
+@render.text
+def pred_out():
+return f"{round(pred())}"
+app = App(app_ui, server)
+if __name__ == '__main__':
+app.run()
+python pyapp.py
+reticulate::repl_python()
+from shiny import App, render, ui, reactive
+import requests
+import logging
+app_ui = ui.page_fluid(
+ui.panel_title("Penguin Mass Predictor"),
+ui.layout_sidebar(
+ui.panel_sidebar(
+[ui.input_slider("bill_length", "Bill Length (mm)", 30, 60, 45, step = 0.1),
+ui.input_select("sex", "Sex", ["Male", "Female"]),
+ui.input_select("species", "Species", ["Adelie", "Chinstrap", "Gentoo"]),
+ui.input_action_button("predict", "Predict")]
+),
+ui.panel_main(
+ui.h2("Penguin Parameters"),
+ui.output_text_verbatim("vals_out"),
+ui.h2("Predicted Penguin Mass (g)"),
+ui.output_text("pred_out")
+)
+)
+)
+def server(input, output, session):
+logging.basicConfig(
+format='%(asctime)s - %(message)s',
+level=logging.INFO
+)
+logging.info("App start")
+@reactive.Calc
+def vals():
+return {
+"bill_length_mm" : input.bill_length(),
+"sex_Male" : input.sex() == "Male",
+"species_Gentoo" : input.species() == "Gentoo",
+"species_Chinstrap" : input.species() == "Chinstrap"
+}
+@reactive.Calc
+@reactive.event(input.predict)
+def pred():
+logging.info("Request Made")
+r = requests.post('http://127.0.0.1:8080/predict', json=vals())
+logging.info("Request Returned")
+if r.status_code == 200:
+return r.json()['predict'][0]
+else:
+logging.error("HTTP error returned")
+return None
+@output
+@render.text
+def vals_out():
+return str(vals())
+@output
+@render.text
+def pred_out():
+prediction = pred()
+return f"{round(prediction, 2)}" if prediction else "Error in prediction"
+if __name__ == '__main__':
+app.run()
+from shiny import App, render, ui, reactive
+import requests
+import logging
+app_ui = ui.page_fluid(
+ui.panel_title("Penguin Mass Predictor"),
+ui.layout_sidebar(
+ui.panel_sidebar(
+[ui.input_slider("bill_length", "Bill Length (mm)", 30, 60, 45, step = 0.1),
+ui.input_select("sex", "Sex", ["Male", "Female"]),
+ui.input_select("species", "Species", ["Adelie", "Chinstrap", "Gentoo"]),
+ui.input_action_button("predict", "Predict")]
+),
+ui.panel_main(
+ui.h2("Penguin Parameters"),
+ui.output_text_verbatim("vals_out"),
+ui.h2("Predicted Penguin Mass (g)"),
+ui.output_text("pred_out")
+)
+)
+)
+def server(input, output, session):
+logging.basicConfig(
+format='%(asctime)s - %(message)s',
+level=logging.INFO
+)
+logging.info("App start")
+@reactive.Calc
+def vals():
+return {
+"bill_length_mm" : input.bill_length(),
+"sex_Male" : input.sex() == "Male",
+"species_Gentoo" : input.species() == "Gentoo",
+"species_Chinstrap" : input.species() == "Chinstrap"
+}
+@reactive.Calc
+@reactive.event(input.predict)
+def pred():
+logging.info("Request Made")
+r = requests.post('http://127.0.0.1:8080/predict', json=vals())
+logging.info("Request Returned")
+if r.status_code == 200:
+return r.json()['predict'][0]
+else:
+logging.error("HTTP error returned")
+return None
+@output
+@render.text
+def vals_out():
+return str(vals())
+@output
+@render.text
+def pred_out():
+prediction = pred()
+return f"{round(prediction, 2)}" if prediction else "Error in prediction"
+if __name__ == '__main__':
+App.run()
+from shiny import App, render, ui, reactive
+import requests
+import logging
+api_url = 'http://127.0.0.1:8080/predict'
+logging.basicConfig(
+format='%(asctime)s - %(message)s',
+level=logging.INFO
+)
+app_ui = ui.page_fluid(
+ui.panel_title("Penguin Mass Predictor"),
+ui.layout_sidebar(
+ui.panel_sidebar(
+[ui.input_slider("bill_length", "Bill Length (mm)", 30, 60, 45, step = 0.1),
+ui.input_select("sex", "Sex", ["Male", "Female"]),
+ui.input_select("species", "Species", ["Adelie", "Chinstrap", "Gentoo"]),
+ui.input_action_button("predict", "Predict")]
+),
+ui.panel_main(
+ui.h2("Penguin Parameters"),
+ui.output_text_verbatim("vals_out"),
+ui.h2("Predicted Penguin Mass (g)"),
+ui.output_text("pred_out")
+)
+)
+)
+def server(input, output, session):
+logging.info("App start")
+@reactive.Calc
+def vals():
+d = {
+"bill_length_mm" : input.bill_length(),
+"sex_Male" : input.sex() == "Male",
+"species_Gentoo" : input.species() == "Gentoo",
+"species_Chinstrap" : input.species() == "Chinstrap"
+}
+return d
+@reactive.Calc
+@reactive.event(input.predict)
+def pred():
+logging.info("Request Made")
+r = requests.post(api_url, json = vals())
+logging.info("Request Returned")
+if r.status_code != 200:
+logging.error("HTTP error returned")
+return r.json().get('predict')[0]
+@output
+@render.text
+def vals_out():
+return f"{vals()}"
+@output
+@render.text
+def pred_out():
+return f"{round(pred())}"
+app = App(app_ui, server)
+python pyapp.py
+from shiny import App, render, ui, reactive
+import requests
+import logging
+from flask import Flask
+app = Flask(__name__)
+@app.route('/')
+api_url = 'http://127.0.0.1:8080/predict'
+logging.basicConfig(
+format='%(asctime)s - %(message)s',
+level=logging.INFO
+)
+app_ui = ui.page_fluid(
+ui.panel_title("Penguin Mass Predictor"),
+ui.layout_sidebar(
+ui.panel_sidebar(
+[ui.input_slider("bill_length", "Bill Length (mm)", 30, 60, 45, step = 0.1),
+ui.input_select("sex", "Sex", ["Male", "Female"]),
+ui.input_select("species", "Species", ["Adelie", "Chinstrap", "Gentoo"]),
+ui.input_action_button("predict", "Predict")]
+),
+ui.panel_main(
+ui.h2("Penguin Parameters"),
+ui.output_text_verbatim("vals_out"),
+ui.h2("Predicted Penguin Mass (g)"),
+ui.output_text("pred_out")
+)
+)
+)
+def server(input, output, session):
+logging.info("App start")
+@reactive.Calc
+def vals():
+d = {
+"bill_length_mm" : input.bill_length(),
+"sex_Male" : input.sex() == "Male",
+"species_Gentoo" : input.species() == "Gentoo",
+"species_Chinstrap" : input.species() == "Chinstrap"
+}
+return d
+@reactive.Calc
+@reactive.event(input.predict)
+def pred():
+logging.info("Request Made")
+r = requests.post(api_url, json = vals())
+logging.info("Request Returned")
+if r.status_code != 200:
+logging.error("HTTP error returned")
+return r.json().get('predict')[0]
+@output
+@render.text
+def vals_out():
+return f"{vals()}"
+@output
+@render.text
+def pred_out():
+return f"{round(pred())}"
+app = App(app_ui, server)
+if __name__ == '__main__':
+app.run()
+python pyapp.py
+reticulate::repl_python()
+from shiny import App, render, ui, reactive
+import requests
+import logging
+from flask import Flask
+@app.route('/')
+api_url = 'http://127.0.0.1:8080/predict'
+logging.basicConfig(
+format='%(asctime)s - %(message)s',
+level=logging.INFO
+)
+app_ui = ui.page_fluid(
+ui.panel_title("Penguin Mass Predictor"),
+ui.layout_sidebar(
+ui.panel_sidebar(
+[ui.input_slider("bill_length", "Bill Length (mm)", 30, 60, 45, step = 0.1),
+ui.input_select("sex", "Sex", ["Male", "Female"]),
+ui.input_select("species", "Species", ["Adelie", "Chinstrap", "Gentoo"]),
+ui.input_action_button("predict", "Predict")]
+),
+ui.panel_main(
+ui.h2("Penguin Parameters"),
+ui.output_text_verbatim("vals_out"),
+ui.h2("Predicted Penguin Mass (g)"),
+ui.output_text("pred_out")
+)
+)
+)
+def server(input, output, session):
+logging.info("App start")
+@reactive.Calc
+def vals():
+d = {
+"bill_length_mm" : input.bill_length(),
+"sex_Male" : input.sex() == "Male",
+"species_Gentoo" : input.species() == "Gentoo",
+"species_Chinstrap" : input.species() == "Chinstrap"
+}
+return d
+@reactive.Calc
+@reactive.event(input.predict)
+def pred():
+logging.info("Request Made")
+r = requests.post(api_url, json = vals())
+logging.info("Request Returned")
+if r.status_code != 200:
+logging.error("HTTP error returned")
+return r.json().get('predict')[0]
+@output
+@render.text
+def vals_out():
+return f"{vals()}"
+@output
+@render.text
+def pred_out():
+return f"{round(pred())}"
+app = App(app_ui, server)
+if __name__ == '__main__':
+app.run()
+python pyapp.py
+reticulate::repl_python()
+from shiny import App, render, ui, reactive
+import requests
+import logging
+from flask import Flask
+@app.route('/')
+api_url = 'http://127.0.0.1:8080/predict'
+logging.basicConfig(
+format='%(asctime)s - %(message)s',
+level=logging.INFO
+)
+app_ui = ui.page_fluid(
+ui.panel_title("Penguin Mass Predictor"),
+ui.layout_sidebar(
+ui.panel_sidebar(
+[ui.input_slider("bill_length", "Bill Length (mm)", 30, 60, 45, step = 0.1),
+ui.input_select("sex", "Sex", ["Male", "Female"]),
+ui.input_select("species", "Species", ["Adelie", "Chinstrap", "Gentoo"]),
+ui.input_action_button("predict", "Predict")]
+),
+ui.panel_main(
+ui.h2("Penguin Parameters"),
+ui.output_text_verbatim("vals_out"),
+ui.h2("Predicted Penguin Mass (g)"),
+ui.output_text("pred_out")
+)
+)
+)
+def server(input, output, session):
+logging.info("App start")
+@reactive.Calc
+def vals():
+d = {
+"bill_length_mm" : input.bill_length(),
+"sex_Male" : input.sex() == "Male",
+"species_Gentoo" : input.species() == "Gentoo",
+"species_Chinstrap" : input.species() == "Chinstrap"
+}
+return d
+@reactive.Calc
+@reactive.event(input.predict)
+def pred():
+logging.info("Request Made")
+r = requests.post(api_url, json = vals())
+logging.info("Request Returned")
+if r.status_code != 200:
+logging.error("HTTP error returned")
+return r.json().get('predict')[0]
+@output
+@render.text
+def vals_out():
+return f"{vals()}"
+@output
+@render.text
+def pred_out():
+return f"{round(pred())}"
+app = App(app_ui, server)
+if __name__ == '__main__':
+app.run()
+python pyapp.py

@@ -1,0 +1,23 @@
+project:
+  type: website
+
+website:
+  title: "Penguins Website"
+  navbar:
+    left:
+      - href: MODEL.qmd
+        text: Model
+      
+    right:
+      - href: VISUAL.qmd
+        text: Visual
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+editor: visual
+
+
