@@ -7,8 +7,7 @@ website:
     left:
       - href: MODEL.qmd
         text: Model
-      
-    right:
+
       - href: VISUAL.qmd
         text: Visual
 

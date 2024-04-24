@@ -5,6 +5,8 @@ format:
     code-fold: true
 ---
 
+## Get Data
+
 ```{r}
 library(reticulate)
 ```
@@ -16,8 +18,6 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn import preprocessing
 ```
-
-## Get Data
 
 ```{python}
 con = duckdb.connect('my-db.duckdb')

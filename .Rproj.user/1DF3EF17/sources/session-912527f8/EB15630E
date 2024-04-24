@@ -3,7 +3,7 @@
     "path": "~/QUARTOPROJECT/MODEL.qmd",
     "project_path": "MODEL.qmd",
     "type": "quarto_markdown",
-    "hash": "471322085",
+    "hash": "2617905525",
     "contents": "",
     "dirty": false,
     "created": 1713395103843.0,
@@ -19,14 +19,14 @@
         "rmdVisualCollapsedChunks": "",
         "cursorPosition": "7,0",
         "scrollLine": "0",
-        "rmdVisualModeLocation": "209:65.33333587646484"
+        "rmdVisualModeLocation": "70:45.33333206176758"
     },
     "folds": "",
-    "lastKnownWriteTime": 1713920235,
+    "lastKnownWriteTime": 1713923571,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1713920235882,
+    "last_content_update": 1713923571774,
     "read_only": false,
     "read_only_alternatives": []
 }

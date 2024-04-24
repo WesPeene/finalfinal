@@ -7,7 +7,8 @@ format:
 
 ## *Penguin Size and Mass by Sex and Species*
 
-```{r}
+```{r, message=FALSE, warning=FALSE, error=FALSE}
+
 library(dplyr)
 library(ggplot2)
 library(dbplyr)
@@ -19,7 +20,7 @@ con <- DBI::dbConnect(
 df <- dplyr::tbl(con, "penguins")
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE, error=FALSE}
 df %>%
   group_by(species, sex) %>%
   summarise(
@@ -34,7 +35,7 @@ df %>%
 
 ## *Penguin Size vs Mass by Species*
 
-```{r}
+```{r, message=FALSE, warning=FALSE, error=FALSE}
 df %>%
   ggplot(aes(x = bill_length_mm, y = body_mass_g, color = species)) +
   geom_point() + 
