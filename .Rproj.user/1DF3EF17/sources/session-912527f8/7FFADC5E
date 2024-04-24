@@ -3,24 +3,24 @@
     "path": "~/QUARTOPROJECT/requirements.txt",
     "project_path": "requirements.txt",
     "type": "text",
-    "hash": "0",
+    "hash": "692823803",
     "contents": "",
-    "dirty": true,
+    "dirty": false,
     "created": 1713896635021.0,
     "source_on_save": false,
     "relative_order": 9,
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "41,7",
-        "scrollLine": "37"
+        "cursorPosition": "90,0",
+        "scrollLine": "78"
     },
     "folds": "",
-    "lastKnownWriteTime": 1713896662,
+    "lastKnownWriteTime": 1713917720,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1713897014039,
+    "last_content_update": 1713917720112,
     "read_only": false,
     "read_only_alternatives": []
 }
