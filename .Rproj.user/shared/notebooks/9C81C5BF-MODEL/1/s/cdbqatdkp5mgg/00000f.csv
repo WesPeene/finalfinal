@@ -1,6 +1,0 @@
-"0","from vetiver import VetiverAPI"
-"0","app = VetiverAPI(v, check_prototype = True)"
-"2","Traceback (most recent call last):
-  File ""<string>"", line 1, in <module>
-NameError: name 'v' is not defined
-"
